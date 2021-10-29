@@ -1,5 +1,5 @@
 {%extends 'base.html'%}
-
+{% load static %}
 
 {% block content %}
 {{block.super}}
@@ -8,6 +8,7 @@
     <div class="row">
       <div class="col-6 col-sm-6 mt-5">
           <h1>.col-6 .col-sm-3</h1>
+          <img src="{% static 'images/image.jpg'%}" class="img-responsive" alt="Image">
 
       </div>
       <div class="col-6 col-sm-6 mt-5">
