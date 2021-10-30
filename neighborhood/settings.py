@@ -13,6 +13,21 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
+
+
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
+
+cloudinary.config( 
+  cloud_name = "dwofopsjd", 
+  api_key = "711236216548118", 
+  api_secret = "HV-nka5FpTRi1N5QSJm80hOT38U" 
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'neighborhood_App',
     'bootstrap3',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
