@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+
+<div class="container">
+
+    <div class="login--wraper">
+    <form class="form" method='post'>
+        {% csrf_token %}
+        <h3>Login</h3>
+        <h6>Login to view what is in your Loaction</h6>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Username</label>
+          <input type="text" name='username' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">Password</label>
+          <input type="password" name='password' class="form-control" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+      </form>
+      </div>
+</div>
+{% endblock %}
