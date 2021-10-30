@@ -12,6 +12,22 @@ class Neighbourhood(models.Model):
     hood_photo = CloudinaryField('images')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='admin')
 
+    def __str__(self):
+        return self.name
+        
+    def save_neigborhood(self):
+        self.save()
+    def delete_neigborhood(self):
+        self.delete()
+    @classmethod
+    def find_neigborhood(cls, hood_id):
+        return cls.objects.filter(id=hood_id)
+    @property
+    def occupants_count(self):
+        return self.neighbourhood_users.count()
+    def update_neigborhood(self):
+        hood_name = self.hood_name
+        self.hood_name = hood_name
 
 
 class Profile(models.Model):
