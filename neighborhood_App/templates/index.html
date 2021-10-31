@@ -5,56 +5,32 @@
 {{block.super}}
 
 <div class="container">
-    <div class="row">
-      <div class="col-6 col-sm-6 mt-5">
-        <!-- <div class="shadow-lg p-3 mb-5 bg-body rounded"> -->
+    <div class="row text-center">
+      <h4>Welcom To events Dashboard</h4>
+      {%for post in posts%}
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-2">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
             <center>
-                <img src="{% static 'images/image.jpg'%}" class="img-responsive" id = "image1" alt="Image">
+                <img src="{% static 'images/image.jpg'%}" class="img-responsive" id = "image1" alt="Image" width="200" height="150">
+                <h5>
+                  Event: {{post.title}}
+                </h5>
+                <small>
+                  Place: {{post.neighbourhood}}
+                </small>
+                <br>
+                <small>
+                  Posted: {{post.created}}
+                </small>
             </center>
           
-        <!-- </div> -->
+        </div>
 
       </div>
-      <div class="col-6 col-sm-6 mt-5">
-        <div class="shadow-lg p-3 mb-5 bg-body rounded">
-            <center>
-                <h2> my village </h2>
-                <p>A great website design is the foundation of your online presence. Making a good first impression means going beyond a great website design and also having an excellent user experience for your customers.
-      
-                  Whether you are looking for a brand new website or help with updating your current site, we can help you build your perfect website.</p>
+        {% endfor %}
+    </div>
     
-              </center>
-
-        </div>
-     
-          
-        </div>
-    </div>
-    <div class="row">
-      <div class="header">
-        <h4>
-          Welcome to Events Dashboard
-        </h4>
-        {%for post in posts%}
-      </div>
-      <div class="col-md-3 col-sm-6 mt-5">
-        <div class="shadow-lg p-3 mb-5 bg-body rounded">
-          <center>
-            <img src="{% static 'images/image.jpg'%}" class="img-responsive"  alt="Image" width="200" height="150">
-            <h5>
-              event:{{post.title}}
-            </h5>
-            <small>
-              Date: {{post.created}}
-            </small>
-        </center>
-
-        </div>
-
-      </div>
-      {% endfor %}
-
-    </div>
+</div>
 
 {% endblock %}
    
