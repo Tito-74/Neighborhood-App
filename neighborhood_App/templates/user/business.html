@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+
+<div class="container">
+    <div class="row text-center">
+      <h4>Welcome To business Dashboard</h4>
+      <a href="{% url 'business_post' %}" class="btn btn-lg bg-info">Add bussines</a>
+      {% for item in business %}
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-2">
+        <div class="shadow-lg p-3 mb-5 bg-body rounded">
+            <center>
+                <h5>
+                  Title: {{ item.name }}
+                </h5>
+                <small>
+                  Location: {{ item.bizzhood }}
+                </small>
+                <br>
+                <small>
+                  Description: {{ item.desc }}
+                </small>
+            </center>
+          
+        </div>
+
+      </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+{% endblock %}
+   

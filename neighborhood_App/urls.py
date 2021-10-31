@@ -1,4 +1,5 @@
 from django.conf.urls import url
+from django.urls import path 
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -11,6 +12,8 @@ urlpatterns=[
     url('update/',views.update_profilePage, name = 'update_profile'),
     url('add/',views.eventPost, name = 'add'),
     url('event/(?P<id>\d+)/', views.viewEvents, name='event'),
+    url('buzpost/',views.addBuzpost, name = 'business_post'),
+    path('business/',views.businessView, name = 'business'),
 
    
 

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Post
+from .models import Profile, Post, Business
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -32,3 +32,9 @@ class PostForm(forms.ModelForm):
     class Meta:
         model=Post
         exclude=['username','neighbourhood','avatar']
+
+class AddBusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        template_name = "buzpost.html"
+        fields = ['user','name','bizzhood','bizz_email','desc']

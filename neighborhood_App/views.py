@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm
+from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm,AddBusinessForm
 from .models import *
 
 # Create your views here.
@@ -94,10 +94,27 @@ def eventPost(request):
     return render(request,"user/add.html", {'form':form})
 
 def businessView(request):
-    return render(request,"index.html")   
+    business = Business.objects.all()
+    context = {'business': business}
+    return render(request,"user/business.html", context )   
 
 def viewEvents(request, id):
     post = Post.objects.get(id=id)
 
     return render(request,"user/event.html",{'post':post}) 
+
+def addBuzpost(request):
+
+    current_user = request.user
+    form = AddBusinessForm()
+    if request.method == 'POST':
+        form = AddBusinessForm(request.POST, request.FILES)
+        if form.is_valid():
+            post_event = form.save(commit=False)
+            post_event.user = current_user
+            post_event.save()
+            return redirect('home')
+    else:
+        form = AddBusinessForm()
+    return render(request,"user/buzpost.html", {'form':form})
 
