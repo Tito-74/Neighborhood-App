@@ -14,6 +14,7 @@ urlpatterns=[
     url('event/(?P<id>\d+)/', views.viewEvents, name='event'),
     url('buzpost/',views.addBuzpost, name = 'business_post'),
     path('business/',views.businessView, name = 'business'),
+    path('Neighbourhood/',views.addNeighbourhood, name = 'neighbourhood'),
 
    
 

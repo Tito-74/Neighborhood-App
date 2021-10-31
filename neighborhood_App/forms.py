@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Post, Business
+from .models import Profile, Post, Business,Neighbourhood
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
+
 
     class meta:
         model = User
@@ -38,3 +39,22 @@ class AddBusinessForm(forms.ModelForm):
         model = Business
         template_name = "buzpost.html"
         fields = ['user','name','bizzhood','bizz_email','desc']
+
+class AddBusinessForm(forms.ModelForm):
+    class Meta:
+        model = Business
+        template_name = "buzpost.html"
+        fields = ['user','name','bizzhood','bizz_email','desc']
+
+
+class AddNeighbourhoodForm(forms.ModelForm):
+    class Meta:
+        model = Neighbourhood
+        template_name = "neighbourhood.html"
+        fields = ['user','name','hood_location','description','hood_photo']
+
+
+
+
+
+    

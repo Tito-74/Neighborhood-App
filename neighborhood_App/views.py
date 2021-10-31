@@ -4,14 +4,15 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm,AddBusinessForm
+from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm,AddBusinessForm,AddNeighbourhoodForm
 from .models import *
 
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
     posts = Post.objects.all()
-    context={'posts':posts}
+    hood = Neighbourhood.objects.all()
+    context={'posts':posts, 'hood':hood}
     return render(request,"index.html",context)
    
 def loginPage(request):
@@ -117,4 +118,19 @@ def addBuzpost(request):
     else:
         form = AddBusinessForm()
     return render(request,"user/buzpost.html", {'form':form})
+
+def addNeighbourhood(request):
+
+    current_user = request.user
+    form = AddNeighbourhoodForm()
+    if request.method == 'POST':
+        form = AddNeighbourhoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            post_event = form.save(commit=False)
+            post_event.user = current_user
+            post_event.save()
+            return redirect('home')
+    else:
+        form = AddNeighbourhoodForm()
+    return render(request,"user/neighbourhood.html", {'form':form})
 
