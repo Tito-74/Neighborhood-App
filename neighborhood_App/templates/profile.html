@@ -1,0 +1,37 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+<div class="container">
+    <div class="content-section">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{% static 'images/image2.jpg'}" alt="image">
+
+            </div>
+            <div class="col-md-6">
+                <div class="address">
+                    <h6>
+                        Name: Tito Kip
+                    </h6>
+                    <h6>
+                        Neighbourhood: Jupyter
+                    </h6>
+                </div>
+                <div class="contacts">
+                    <small>
+                        Bio: love football
+                    </small>
+                    <small>
+                        Email: tito@gmail.com
+                    </small>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<h2>hello {{request.user}}</h2>
+{% endblock %}

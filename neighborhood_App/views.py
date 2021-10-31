@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from .forms import UserRegisterForm
+from .models import *
 
 # Create your views here.
 
@@ -36,3 +37,11 @@ def register(request):
 
     
     return render(request,'user/register.html',{'form': form})
+
+
+def my_profile(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    return render(request,'profile.html',{"profile":profile})
+
