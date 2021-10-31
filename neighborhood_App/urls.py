@@ -8,6 +8,7 @@ urlpatterns=[
     url('register/',views.register, name = 'register'),
     url('login/',views.loginPage, name = 'login'),
     url('profile/',views.my_profile, name = 'profile'),
+    url('create/profile', views.create_profile, name='create-profile'),
 
 ]
 if settings.DEBUG:

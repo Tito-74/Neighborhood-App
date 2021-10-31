@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
-from .forms import UserRegisterForm
+from django.contrib.auth.models import User
+from .forms import UserRegisterForm, ProfileForm
 from .models import *
 
 # Create your views here.
@@ -24,14 +25,17 @@ def loginPage(request):
 def register(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
-        print("form:",form)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-
-            # print("user:",username)
+            user = form.save()
+            user.save()
+            print("user:",user)
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=user.username, password=raw_password)
+            login(request, user)
             messages.success(request,f"Account created for {username}!")
             return redirect('login')
+            
+            # return redirect('login')
     else:
         form = UserRegisterForm()
 
@@ -44,4 +48,20 @@ def my_profile(request):
     profile =Profile.objects.all()
 
     return render(request,'user/profile.html',{"profile":profile})
+
+
+def create_profile(request):
+    current_user=request.user
+    if request.method=="POST":
+        form =ProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+        return HttpResponseRedirect('/')
+
+    else:
+
+        form = ProfileForm()
+    return render(request,'user/create_profile.html',{"form":form})  
 
