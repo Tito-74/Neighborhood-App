@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('neighborhood_App.urls')),
     path(r'^accounts/', include('registration.backends.simple.urls')),
-    path(r'logout/', views.LogoutView.as_view(), {"next_page": 'accounts/signup'}),
+    # path(r'logout/', views.LogoutView.as_view(), {"next_page": 'accounts/signup'}),
+    path(r'logout/', views.logout_then_login),
     
 ]

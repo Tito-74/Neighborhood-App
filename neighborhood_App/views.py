@@ -2,11 +2,13 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
-from .forms import UserRegisterForm, ProfileForm
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse,Http404,HttpResponseRedirect
+from .forms import UserRegisterForm, UpdateProfileForm
 from .models import *
 
 # Create your views here.
-
+@login_required(login_url='/accounts/login/')
 def index(request):
     return render(request,"index.html")
    
@@ -32,7 +34,7 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            messages.success(request,f"Account created for {username}!")
+            messages.success(request,f"Account created for {request.user}!")
             return redirect('login')
             
             # return redirect('login')
@@ -42,33 +44,29 @@ def register(request):
     
     return render(request,'user/register.html',{'form': form})
 
-
+@login_required(login_url='/accounts/login/')
 def my_profile(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
 
     return render(request,'user/profile.html',{"profile":profile})
 
+# def update_profilePage(request):
+
+#     return render(request,"user/update.html")
+
+def update_profilePage(request, id):
+    # obj = get_object_or_404(Profile, user_id=id)
+    obj2 = get_object_or_404(User, id=id)
+    form = UpdateProfileForm(request.POST or None, request.FILES)
+    # form2 = UpdateUserForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        # form2.save()
+        return HttpResponseRedirect("/profile")
+
+    return render(request,"user/update.html", {"form": form})
+    
 
 
-# def user_profile(request,username):
-#     user = User.objects.get(username=username)
-#     profile =Profile.objects.get(username=user)
-
-#     return render(request,'user/profile.html',{"profile":profile})
-
-def create_profile(request):
-    current_user=request.user
-    if request.method=="POST":
-        form =ProfileForm(request.POST,request.FILES)
-        if form.is_valid():
-            profile = form.save(commit = False)
-            profile.username = current_user
-            profile.save()
-        return HttpResponseRedirect('/')
-
-    else:
-
-        form = ProfileForm()
-    return render(request,'user/create_profile.html',{"form":form})  
 

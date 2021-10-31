@@ -32,6 +32,7 @@ class Neighbourhood(models.Model):
 
 
 class Profile(models.Model):
+    id_no = models.IntegerField(default=0)
     username = models.ForeignKey(User,on_delete=models.CASCADE)
     name =models.CharField(max_length=100)
     email = models.EmailField()
@@ -39,8 +40,16 @@ class Profile(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE)
     profile_pict = CloudinaryField('images')
     
-
     def __str__(self):
         return self.name
+
+    def save_profile(self):
+        self.save()
+
+    def delete_profile(self):
+        self.delete()
+
+    def update_profile(cls, id):
+        Profile.objects.get(user_id=id)
     
     

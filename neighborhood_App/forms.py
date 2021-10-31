@@ -17,7 +17,7 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password1'].widget.attrs.update({'class':'form-control'})
         self.fields['password2'].widget.attrs.update({'class':'form-control'})
 
-class ProfileForm(forms.ModelForm):
+class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model=Profile
         exclude=['username']
