@@ -10,7 +10,9 @@ from .models import *
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def index(request):
-    return render(request,"index.html")
+    posts = Post.objects.all()
+    context={'posts':posts}
+    return render(request,"index.html",context)
    
 def loginPage(request):
     if request.method == "POST":
