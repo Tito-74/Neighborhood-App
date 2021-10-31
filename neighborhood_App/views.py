@@ -96,5 +96,8 @@ def eventPost(request):
 def businessView(request):
     return render(request,"index.html")   
 
+def viewEvents(request, id):
+    post = Post.objects.get(id=id)
 
+    return render(request,"user/event.html",{'post':post}) 
 

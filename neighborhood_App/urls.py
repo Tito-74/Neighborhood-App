@@ -10,6 +10,7 @@ urlpatterns=[
     url('profile/',views.my_profile, name = 'profile'),
     url('update/',views.update_profilePage, name = 'update_profile'),
     url('add/',views.eventPost, name = 'add'),
+    url('event/(?P<id>\d+)/', views.viewEvents, name='event'),
 
    
 

@@ -9,3 +9,13 @@
   display:flex;
   flex-direction:column;
 }
+.projectImage img{
+  width: 300px;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  height: 80vh;
+  
+
+}
