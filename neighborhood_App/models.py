@@ -51,5 +51,20 @@ class Profile(models.Model):
 
     def update_profile(cls, id):
         Profile.objects.get(user_id=id)
+
+class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=150)
+    created = models.DateTimeField(auto_now_add=True)
+    image = CloudinaryField('images')
+    content = models.TextField(max_length=300, blank=True)
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, default='', blank=True)
+    def __str__(self):
+        return self.title
+    def save_post(self):
+        return self.save()
+    def delete_post(self):
+        self.delete()
+
     
     
