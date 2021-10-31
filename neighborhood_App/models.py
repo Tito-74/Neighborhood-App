@@ -32,7 +32,7 @@ class Neighbourhood(models.Model):
 
 
 class Profile(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
     name =models.CharField(max_length=100)
     email = models.EmailField()
     bio = models.TextField(max_length = 250, blank=True)
@@ -41,6 +41,6 @@ class Profile(models.Model):
     
 
     def __str__(self):
-        return self.user.name
+        return self.name
     
     
