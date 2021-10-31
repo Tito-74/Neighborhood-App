@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile
+from .models import Profile, Post
 
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField()
@@ -21,3 +21,14 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model=Profile
         exclude=['username']
+
+class AddEventForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        template_name = "add.html"
+        fields = ['user','title','image','content','neighbourhood']
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model=Post
+        exclude=['username','neighbourhood','avatar']

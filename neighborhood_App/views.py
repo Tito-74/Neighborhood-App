@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .forms import UserRegisterForm, UpdateProfileForm
+from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm
 from .models import *
 
 # Create your views here.
@@ -66,7 +66,24 @@ def update_profilePage(request, id):
         return HttpResponseRedirect("/profile")
 
     return render(request,"user/update.html", {"form": form})
-    
+
+def eventPost(request):
+
+    current_user = request.user
+    form = AddEventForm()
+    if request.method == 'POST':
+        form = AddEventForm(request.POST, request.FILES)
+        if form.is_valid():
+            post_event = form.save(commit=False)
+            post_event.user = current_user
+            post_event.save()
+            return redirect('home')
+    else:
+        form = AddEventForm()
+    return render(request,"user/add.html", {'form':form})
+
+def businessView(request):
+    return render(request,"index.html")   
 
 
 
