@@ -16,9 +16,12 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.urls import path 
+from django.contrib.auth import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('neighborhood_App.urls')),
+    path(r'^accounts/', include('registration.backends.simple.urls')),
+    path(r'logout/', views.LogoutView.as_view(), {"next_page": 'accounts/signup'}),
     
 ]

@@ -41,7 +41,7 @@ def register(request):
 
 def my_profile(request):
     current_user=request.user
-    profile =Profile.objects.get(username=current_user)
+    profile =Profile.objects.all()
 
-    return render(request,'profile.html',{"profile":profile})
+    return render(request,'user/profile.html',{"profile":profile})
 

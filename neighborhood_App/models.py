@@ -37,3 +37,8 @@ class Profile(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     name =models.CharField(max_length=100)
     email = models.EmailField()
+
+    def __str__(self):
+        return self.user.name
+    
+    
