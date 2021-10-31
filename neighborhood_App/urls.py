@@ -8,7 +8,7 @@ urlpatterns=[
     url('register/',views.register, name = 'register'),
     url('login/',views.loginPage, name = 'login'),
     url('profile/',views.my_profile, name = 'profile'),
-    url('update/<id>',views.update_profilePage, name = 'update_profile'),
+    url('update/',views.update_profilePage, name = 'update_profile'),
     url('add/',views.eventPost, name = 'add'),
 
    

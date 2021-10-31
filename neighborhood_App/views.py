@@ -57,15 +57,24 @@ def my_profile(request):
 
 #     return render(request,"user/update.html")
 
-def update_profilePage(request, id):
-    # obj = get_object_or_404(Profile, user_id=id)
-    obj2 = get_object_or_404(User, id=id)
-    form = UpdateProfileForm(request.POST or None, request.FILES)
-    # form2 = UpdateUserForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        # form2.save()
-        return HttpResponseRedirect("/profile")
+def update_profilePage(request):
+    current_user=request.user
+    if request.method=="POST":
+        instance = Profile.objects.get(username=current_user)
+        form = UpdateProfileForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+
+        return redirect('profile')
+
+    elif Profile.objects.get(username=current_user):
+        profile = Profile.objects.get(username=current_user)
+        form = UpdateProfileForm(instance=profile)
+    else:
+        form = UpdateProfileForm()
+
 
     return render(request,"user/update.html", {"form": form})
 
