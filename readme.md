@@ -29,10 +29,9 @@ code . or atom . based on your favorite text editor you have.
  * Find Contact Information for the health department and Police authorities near thier neighborhood.
  * Create Posts that will be visible to everyone in thier neighborhood.
  * Change My neighborhood when one decide to move out.
-
  * Only view details of a single neighborhood.
 
 ## Further help
 For any challenge using the App please don't hesitate to contact me through Email: kipkirui133@gmail.com or call me through 0714969204
 
-<a href='https://github.com/Tito-74/Gallery/blob/master/license'>MIT license</a>
+<a href='https://github.com/Tito-74/Neighborhood-App/blob/master/license'>MIT license</a>
