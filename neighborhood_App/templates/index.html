@@ -7,6 +7,8 @@
 <div class="container">
     <div class="row text-center">
       <h4>Welcome To events Dashboard</h4>
+
+      <h6>Click to view post in the neighbourhood</h6>
       <a href="{% url 'neighbourhood' %}">Add Hood</a>
       {%for post in hood %}
       <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-2">
@@ -30,11 +32,6 @@
       </div>
         {% endfor %}
     </div>
-    <!-- {%for item in hood %}
-    <img src="{{item.hood_photo.url}}" class="img-responsive" id = "image1" alt="Image" width="200" height="150">
-    
-    {% endfor %}
-     -->
 </div>
 
 {% endblock %}

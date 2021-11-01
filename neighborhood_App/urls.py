@@ -9,7 +9,6 @@ urlpatterns=[
     url('register/',views.register, name = 'register'),
     url('login/',views.loginPage, name = 'login'),
     url('profile/',views.my_profile, name = 'profile'),
-    # path('create/profile', views.create_profile, name='create-profile'),
     path('update/<id>',views.update_profilePage, name = 'update_profile'),
     url('add/',views.eventPost, name = 'add'),
     url('event/(?P<id>\d+)/', views.viewEvents, name='event'),
