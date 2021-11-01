@@ -3,25 +3,29 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, Post, Business,Neighbourhood
 
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
-
+class SignUpForm(UserCreationForm):
+    # email = forms.EmailField()
 
     class meta:
         model = User
-        fields = ['username','email','password1','password2']
+        fields = ('username','email','password1','password2')
         
     def __init__(self, *args, **kwargs):
-        super(UserRegisterForm,self).__init__(*args, **kwargs)
+        super(SignUpForm,self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs.update({'class':'form-control'})
-        self.fields['email'].widget.attrs.update({'class':'form-control'})
+        # self.fields['email'].widget.attrs.update({'class':'form-control'})
         self.fields['password1'].widget.attrs.update({'class':'form-control'})
         self.fields['password2'].widget.attrs.update({'class':'form-control'})
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model=Profile
-        exclude=['username']
+        exclude=['user',]
+
+class UpdateUserForm(forms.ModelForm):
+    class Meta:
+        model=User
+        exclude=['user',]
 
 class AddEventForm(forms.ModelForm):
     class Meta:
@@ -51,7 +55,7 @@ class AddNeighbourhoodForm(forms.ModelForm):
     class Meta:
         model = Neighbourhood
         template_name = "neighbourhood.html"
-        fields = ['user','name','hood_location','description','hood_photo']
+        fields = ['name','hood_location','description','hood_photo']
 
 
 

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .forms import UserRegisterForm, UpdateProfileForm, AddEventForm,AddBusinessForm,AddNeighbourhoodForm
+from .forms import SignUpForm, UpdateProfileForm,UpdateUserForm, AddEventForm,AddBusinessForm,AddNeighbourhoodForm
 from .models import *
 
 # Create your views here.
@@ -25,11 +25,11 @@ def loginPage(request):
         if user is not None:
             login(request, user)
             return redirect('home')
-    return render(request,"user/login.html")
+    return render(request,"registration/login.html")
 
 def register(request):
-    if request.method == "POST":
-        form = UserRegisterForm(request.POST)
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
             user.save()
@@ -37,47 +37,39 @@ def register(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
-            messages.success(request,f"Account created for {request.user}!")
             return redirect('login')
-            
-            # return redirect('login')
     else:
-        form = UserRegisterForm()
 
-    
-    return render(request,'user/register.html',{'form': form})
+        form = SignUpForm()
+
+
+    return render(request,'registration/register.html', {'form': form})
 
 @login_required(login_url='/accounts/login/')
 def my_profile(request):
-    current_user=request.user
-    profile =Profile.objects.get(username=current_user)
+    current_user = request.user
+    profile = Profile.objects.filter(user=current_user.id).all
+    posts = Post.objects.filter(user=current_user.id).all
 
-    return render(request,'user/profile.html',{"profile":profile})
+    return render(request,'registration/profile.html',{"profile":profile, "posts": posts})
 
-# def update_profilePage(request):
 
-#     return render(request,"user/update.html")
 
-def update_profilePage(request):
-    current_user=request.user
-    if request.method=="POST":
-        instance = Profile.objects.get(username=current_user)
-        form = UpdateProfileForm(request.POST,request.FILES,instance=instance)
-        if form.is_valid():
-            profile = form.save(commit = False)
-            profile.username = current_user
-            profile.save()
+def update_profilePage(request, id):
 
-        return redirect('profile')
-
-    elif Profile.objects.get(username=current_user):
-        profile = Profile.objects.get(username=current_user)
-        form = UpdateProfileForm(instance=profile)
+    obj = get_object_or_404(Profile, user_id=id)
+    obj2 = get_object_or_404(User, id=id)
+    form = UpdateProfileForm(request.POST or None, request.FILES, instance=obj)
+    form2 = UpdateUserForm(request.POST or None, instance=obj2)
+    if form.is_valid() and form2.is_valid():
+        form.save()
+        form2.save()
+        return HttpResponseRedirect("/profile")
     else:
         form = UpdateProfileForm()
 
-
-    return render(request,"user/update.html", {"form": form})
+  
+    return render(request,"registration/update.html", {"form":form,'form2':form2})
 
 def eventPost(request):
 
@@ -92,17 +84,18 @@ def eventPost(request):
             return redirect('home')
     else:
         form = AddEventForm()
-    return render(request,"user/add.html", {'form':form})
+    return render(request,"registration/add.html", {'form':form})
 
 def businessView(request):
     business = Business.objects.all()
     context = {'business': business}
-    return render(request,"user/business.html", context )   
+    return render(request,"registration/business.html", context )   
 
 def viewEvents(request, id):
-    post = Post.objects.get(id=id)
+    hood = Neighbourhood.objects.get(id=id)
+    posts = Post.objects.all()
 
-    return render(request,"user/event.html",{'post':post}) 
+    return render(request,"registration/event.html",{'hood':hood, 'posts':posts}) 
 
 def addBuzpost(request):
 
@@ -117,7 +110,7 @@ def addBuzpost(request):
             return redirect('home')
     else:
         form = AddBusinessForm()
-    return render(request,"user/buzpost.html", {'form':form})
+    return render(request,"registration/buzpost.html", {'form':form})
 
 def addNeighbourhood(request):
 
@@ -132,5 +125,18 @@ def addNeighbourhood(request):
             return redirect('home')
     else:
         form = AddNeighbourhoodForm()
-    return render(request,"user/neighbourhood.html", {'form':form})
+    return render(request,"registration/neighbourhood.html", {'form':form})
+
+
+def search(request):
+    if 'business' in request.GET and request.GET['business']:
+        business = request.GET.get("business")
+        results = Business.search_business(business)
+        message = f'business'
+        return render(request, 'registration/search.html', {'business': results, 'message': message})
+    else:
+        message = "You haven't searched for anything, please try again"
+    return render(request, 'registration/search.html', {'message': message})
+
+    
 

@@ -9,12 +9,14 @@ urlpatterns=[
     url('register/',views.register, name = 'register'),
     url('login/',views.loginPage, name = 'login'),
     url('profile/',views.my_profile, name = 'profile'),
-    url('update/',views.update_profilePage, name = 'update_profile'),
+    # path('create/profile', views.create_profile, name='create-profile'),
+    path('update/<id>',views.update_profilePage, name = 'update_profile'),
     url('add/',views.eventPost, name = 'add'),
     url('event/(?P<id>\d+)/', views.viewEvents, name='event'),
     url('buzpost/',views.addBuzpost, name = 'business_post'),
     path('business/',views.businessView, name = 'business'),
     path('Neighbourhood/',views.addNeighbourhood, name = 'neighbourhood'),
+    url(r'^search/', views.search, name='search'),
 
    
 

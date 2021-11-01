@@ -2,6 +2,8 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 # Create your models here.
@@ -32,8 +34,7 @@ class Neighbourhood(models.Model):
 
 
 class Profile(models.Model):
-    id_no = models.IntegerField(default=0)
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User, null= True , on_delete=models.CASCADE)
     name =models.CharField(max_length=100)
     email = models.EmailField()
     bio = models.TextField(max_length = 250, blank=True)
@@ -73,7 +74,7 @@ class Business(models.Model):
     bizz_email = models.CharField(max_length=30)
     desc = models.TextField(blank=True)
     def __str__(self):
-        return f'{self.business_name} business'
+        return f'{self.name} business'
     
     def save_business(self):
         self.save()
@@ -88,11 +89,12 @@ class Business(models.Model):
         business = Business.objects.filter(id=id)
         return business
         def update_business(self):
-            name = self.business_name
-            self.business_name = name
+            name = self.name
+            self.name = name
     @classmethod
     def search_business(cls, name):
-        return cls.objects.filter(business_name__icontains=name).all()
+        results = cls.objects.filter(name__icontains=name)
+        return results
 
     
     

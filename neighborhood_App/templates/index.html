@@ -8,20 +8,20 @@
     <div class="row text-center">
       <h4>Welcome To events Dashboard</h4>
       <a href="{% url 'neighbourhood' %}">Add Hood</a>
-      {%for post in posts%}
+      {%for post in hood %}
       <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mt-2">
         <div class="shadow-lg p-3 mb-5 bg-body rounded">
             <center>
-               <a href="{% url 'event' post.id %}"><img src="{{post.image.url}}" class="img-responsive" id = "image1" alt="Image" width="200" height="150"></a> 
+               <a href="{% url 'event' post.id %}"><img src="{{post.hood_photo.url}}" class="img-responsive" id = "image1" alt="Image" width="200" height="150"></a> 
                 <h5>
-                  Event: {{post.title}}
+                  Event: {{post.name}}
                 </h5>
                 <small>
-                  Place: {{post.neighbourhood}}
+                  Place: {{post.hood_location}}
                 </small>
                 <br>
                 <small>
-                  Posted: {{post.created}}
+                  Posted: {{post.description}}
                 </small>
             </center>
           
@@ -30,11 +30,11 @@
       </div>
         {% endfor %}
     </div>
-    {%for item in hood %}
+    <!-- {%for item in hood %}
     <img src="{{item.hood_photo.url}}" class="img-responsive" id = "image1" alt="Image" width="200" height="150">
     
     {% endfor %}
-    
+     -->
 </div>
 
 {% endblock %}
